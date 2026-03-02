@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catch The Box Game</title>
+
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            background: #f0f0f0;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        #gameArea {
+            width: 400px;
+            height: 400px;
+            background: white;
+            border: 3px solid black;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #box {
+            width: 50px;
+            height: 50px;
+            background: red;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🎯 Catch The Box</h1>
+<h2>Score: <span id="score">0</span></h2>
+<h2>Time: <span id="time">15</span></h2>
+
+<div id="gameArea">
+    <div id="box"></div>
+</div>
+
+<button onclick="startGame()">Start Game</button>
+
+<script>
+    let score = 0;
+    let time = 15;
+    let gameInterval;
+    let timer;
+
+    function moveBox() {
+        let box = document.getElementById("box");
+
+        let x = Math.random() * 350;
+        let y = Math.random() * 350;
+
+        box.style.left = x + "px";
+        box.style.top = y + "px";
+    }
+
+    document.getElementById("box").onclick = function () {
+        score++;
+        document.getElementById("score").innerText = score;
+        moveBox();
+    }
+
+    function startGame() {
+        score = 0;
+        time = 15;
+        document.getElementById("score").innerText = score;
+        document.getElementById("time").innerText = time;
+
+        moveBox();
+
+        gameInterval = setInterval(moveBox, 800);
+
+        timer = setInterval(function () {
+            time--;
+            document.getElementById("time").innerText = time;
+
+            if (time == 0) {
+                clearInterval(gameInterval);
+                clearInterval(timer);
+                alert("Game Over! Your Score: " + score);
+            }
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
